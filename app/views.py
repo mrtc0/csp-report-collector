@@ -2,9 +2,15 @@
 from django.http.response import JsonResponse
 import json
 from .models import Report
+import re
 
+
+def get_headers(request):
+    regex = re.compile('^HTTP_')
+    return dict((regex.sub('', header), value) for (header, value) in request.META.items() if header.startswith('HTTP_'))
 
 def create_report(request):
+    headers = json.dumps(get_headers(request))
     reports = json.loads(request.body.decode("utf-8"))["csp-report"]
 
     Report.objects.create(
@@ -18,6 +24,7 @@ def create_report(request):
         source_file=reports.get("source-file", ""),
         status_code=reports.get("status-code", ""),
         line_number=reports.get("line-number", ""),
+        http_header=headers,
     )
 
     return JsonResponse({"status": "OK"})

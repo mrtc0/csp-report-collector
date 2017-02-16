@@ -13,6 +13,7 @@ class Report(models.Model):
     status_code = models.CharField("statusCode", max_length=250, blank=True)
     line_number = models.CharField("lineNumber", max_length=250, blank=True)
     column_number = models.CharField("columnNumber", max_length=250, blank=True)
+    http_header = models.TextField("httpHeader")
 
     def __str__(self):
         return self.document_uri
