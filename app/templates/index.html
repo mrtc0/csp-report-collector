@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Report{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <nav>
+        <div class="nav-wrapper teal darken-1">
+            <a href="/" class="brand-logo">Report</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down teal darken-1">
+                <li><a href="#">Config</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="row">
+    <div class="container">
+        <table class="bordered centered">
+            <thead>
+                <tr>
+                    <th data-field="created_at">Date</th>
+                    <th data-field="document-uri">document-uri</th>
+                    <th data-field="blocked-uri">blocked-uri</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                <tr>
+                    <td>{{ report.created_at }}</td>
+                    <td>{{ report.document_uri }}</td>
+                    <td>{{ report.blocked_uri }}</td>
+                    <tr>
+                        {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

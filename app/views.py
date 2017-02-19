@@ -1,5 +1,6 @@
 # from django.shortcuts import render
 from django.http.response import JsonResponse
+from django.shortcuts import render
 import json
 from .models import Report
 import re
@@ -16,7 +17,7 @@ def create_report(request):
     Report.objects.create(
         document_uri=reports.get("document-uri", ""),
         referrer=reports.get("referrer", ""),
-        blocked_uri=reports.get("blcoked-uri", ""),
+        blocked_uri=reports.get("blocked-uri", ""),
         effective_directive=reports.get("effective-directive", ""),
         violated_directive=reports.get("violated-directive", ""),
         original_policy=reports.get("original-policy", ""),
@@ -28,3 +29,8 @@ def create_report(request):
     )
 
     return JsonResponse({"status": "OK"})
+
+
+def show_index(request):
+    reports = Report.objects.all().order_by('-created_at')
+    return render(request, 'index.html', {'reports': reports})

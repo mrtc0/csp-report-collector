@@ -1,7 +1,15 @@
 from django.db import models
 
 
-class Report(models.Model):
+class Template(models.Model):
+    """全てのモデルで共通のフィールドを含んだAbstract Model"""
+    class Meta:
+        abstract = True
+    created_at = models.DateTimeField("作成日時", auto_now_add=True)
+    updated_at = models.DateTimeField("最終更新日時", auto_now=True)
+
+
+class Report(Template):
     document_uri = models.URLField("document-uri", blank=True)
     referrer = models.CharField("referrer", max_length=250, blank=True)
     blocked_uri = models.URLField("blocked-uri", blank=True)
